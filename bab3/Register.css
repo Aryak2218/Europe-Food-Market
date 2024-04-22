@@ -1,0 +1,109 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+  }
+    a {
+    text-decoration: none;
+    color: #420404;
+  }
+    .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+    h1, h2 {
+    color: #450404;
+  }
+  header {
+    padding: 15px;
+    background-color: #7c0000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+    header a {
+    color: white;
+    font-size: 1.2rem;
+  }
+   header a:hover {
+    color: #ccc;
+  }
+    header img {
+    height: 190px;
+  }
+    @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+    }
+      header a {
+      margin: 5px 0;
+    }
+      header img {
+      margin: 0 auto 10px auto;
+    }
+  }
+    .form-login {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 hsla(0, 0, 0, 0.1);
+  }
+    .form-login h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+    .form-login input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+    .form-login input:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px rgba(117, 0, 0, 0.5);
+  }
+    .form-login button[type='submit'] {
+    padding: 10px 20px;
+    font-size: 1.3rem;
+    background-color: #013f00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+    .form-login button[type='submit']:hover {
+    background-color: #002265;
+  }
+    @media (max-width: 768px) {
+    .form-login {
+      padding: 1rem;
+    }
+      .form-login input {
+      font-size: 1rem;
+    }
+      .form-login button[type='submit'] {
+      font-size: 1rem;
+    }
+  }
+    footer {
+    padding: 15px;
+    background-color: #08074d;
+    color: white;
+    text-align: center;
+  }
+    footer p {
+    font-size: 0.8rem;
+  }
+    @media (max-width: 768px) {
+    footer {
+      padding: 1rem;
+    }
+      footer p {
+      font-size: 0.7rem;
+    }
+  }
