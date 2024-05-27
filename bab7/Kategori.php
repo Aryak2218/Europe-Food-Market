@@ -1,12 +1,21 @@
+<?php
+session_start();
+if ($_SESSION['username'] == null) {
+	header('location:../login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="logo.jpeg" />
+    <link rel="icon" href="europe.png" />
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="kategori.css">
     <title>Admin Market</title>
 </head>
+
 <body>
     <div class="wrapper">
         <nav id="sidebar">
@@ -15,7 +24,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#" class="active">
+                    <a href="admin.php" class="active">
                         <i class="bx bxs-flag-checkered"></i>
                         <span class="links_name">Dashboard</span>
                     </a>
@@ -27,13 +36,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="transaction.php">
+                    <a href="transaksi.php">
                         <i class="bx bxs-wallet"></i>
                         <span class="links_name">Transaction</span>
                     </a>
                 </li>
                   <li>
-                    <a href="#">
+                    <a href="logout.php">
                         <i class="bx bxs-log-out-circle"></i>
                         <span class="links_name">Log out</span>
                     </a>
@@ -50,9 +59,9 @@
                 </div>
             </nav>
             <h3>Categories</h3>
-            <button type="button" class="btn btn-primary" onclick="location.href='categories-entry.php'">
-                Tambah Data
-            </button>
+            <button type="button" class="btn btn-tambah">
+				<a href="kategori-entry.php">Tambah Data</a>
+			</button>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -64,17 +73,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Italia</td>
-                        <td>Junk Food</td>
-                        <td>Pizza</td>
-                        <td>$15</td>
-                        <td>
-                            <button class="btn btn-success" onclick="editCategory()">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteCategory()">Hapus</button>
-                        </td>
-                    </tr>
-                </tbody>
+    <?php
+    include 'db_connection.php';
+    $sql = "SELECT * FROM categories";
+    $result = mysqli_query($koneksi, $sql);
+    if (mysqli_num_rows($result) == 0) {
+        echo "
+        <tr>
+            <td colspan='5' align='center'>Data Kosong</td>
+        </tr>
+        ";
+    } else {
+        while ($data = mysqli_fetch_assoc($result)) {
+            echo "
+            <tr>
+                <td>$data[region]</td>
+                <td>$data[category]</td>
+                <td>$data[description]</td>
+                <td>$data[price]</td>
+                <td>
+                    <a class='btn-edit' href='kategori-edit.php?id=$data[id]'>Edit</a> | 
+                    <a class='btn-delete' href='kategori-hapus.php?id=$data[id]'>Hapus</a>
+                </td>
+            </tr>
+            ";
+        }
+    }
+    ?>
+</tbody>
             </table>
         </div>
     </div>

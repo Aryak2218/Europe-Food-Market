@@ -1,28 +1,31 @@
 <?php
 session_start();
-
-function isLoginValid($username, $password) {
-    
-    $valid_username = 'aryak1';
-    $valid_password = '12345';
-
-    return $username === $valid_username && $password === $valid_password;
-}
+include 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (isLoginValid($username, $password)) {
-        $_SESSION['username'] = $username;
-        header('Location: index.php');
-        exit();
+    $sql = "SELECT * FROM users WHERE username='$username'";
+    $result = mysqli_query($koneksi, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['username'] = $username;
+            header('Location: index.php');
+            exit();
+        } else {
+            echo "Invalid password.";
+        }
     } else {
-        header('Location: login.php?error=1');
-        exit();
+        echo "No user found with that username.";
     }
+
+    mysqli_close($koneksi);
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,18 +53,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <center>
             <img src="europe.png" alt="" width="200" />
             <h1>Welcome To Europe Food Market</h1>
-            <a href="index.php" >Home</a>
-            <a href="Login.php" >Login</a>
+            <a href="index.php">Home</a>
+            <a href="Login.php">Login</a>
             <a href="Register.php">Register</a>
         </center>
     </header>
     <main>
         <div class="form-login">
             <center>
-                <h2>Login Your Account </h2>
+                <h2>Login Your Account</h2>
                 <form method="POST" action="">
-                    <input type="text" name="username" placeholder="Username" />
-                    <input type="password" name="password" placeholder="Password" />
+                    <input type="text" name="username" placeholder="Username" required />
+                    <input type="password" name="password" placeholder="Password" required />
                     <button type="submit">Login</button>
                 </form>
             </center>
@@ -75,16 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Login successful</p>
             <button onclick="hidePopup()">Close</button>
         </div>
-    </main>
-
-    <script>
-        function showPopup() {
-            document.getElementById("popup").style.display = "block";
-        }
-
-        function hidePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-    </script>
+    </main>	
 </body>
 </html>
